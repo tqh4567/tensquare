@@ -1,0 +1,29 @@
+server: 
+  port: 9004
+spring: 
+  application:  
+    name: tensquare-artical #指定服务名
+  datasource:  
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.159.130:3306/tensquare_article?characterEncoding=UTF8
+    username: root
+    password: 123456
+  jpa: 
+    database: MySQL
+    show-sql: true
+  data:
+    mongodb:
+      host: 192.168.159.130
+      database: articaldb
+  redis:
+    host: 192.168.159.130
+jwt:
+  config:
+    key: itcast
+    ttl: 3600000
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:6868/eureka/
+  instance:
+    prefer-ip-address: true
