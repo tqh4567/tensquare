@@ -16,21 +16,34 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/friend")
 public class FriendController {
     @Autowired
-    private FriendService friendService;
-
-    @Autowired
     private HttpServletRequest request;
+    @Autowired
+    private FriendService friendService;
     @RequestMapping(value = "/like/{friendid}/{type}",method = RequestMethod.PUT)
     public Result addFriend(@PathVariable String friendid,@PathVariable String type){
-        Claims claims = (Claims) request.getAttribute("user_claims");
+        //验证用户是否登陆
+        Claims claims = (Claims) request.getAttribute("claims_user");
         if(claims==null){
             return new Result(false, StatusCode.ACCESSERROR,"权限不足");
         }
-        if(type.equals("1")){
-            if((friendService.selectCount(claims.getId(),friendid))==0){
-                return new Result(false,StatusCode.REPERROR,"你已经添加过该好友");
+        //添加好友
+        if(type!=null) {
+            if (type.equals("1")) {
+                //添加好友
+                if ((friendService.selectCount(claims.getId(), friendid)) == 0) {
+                    return new Result(false, StatusCode.REPERROR, "你已经添加过该好友");
+                }
+                if ((friendService.selectCount(claims.getId(), friendid)) == 1){
+                    return new Result(true,StatusCode.OK,"添加成功");
+                }
+            }
+            else if(type.equals("2")){
+                //添加非好友
             }
         }
-        return new Result(true,StatusCode.OK,"添加成功");
+        else {
+            return new Result(false,StatusCode.ERROR,"参数异常！");
+        }
+        return new Result(false,StatusCode.ERROR,"参数异常！");
     }
 }

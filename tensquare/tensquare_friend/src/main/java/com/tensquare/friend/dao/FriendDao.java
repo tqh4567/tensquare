@@ -1,14 +1,14 @@
 package com.tensquare.friend.dao;
 
-import com.tensquare.friend.entity.Friend;
+import com.tensquare.friend.pojo.Friend;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 public interface FriendDao extends JpaRepository<Friend,String> {
-    @Query("select count (f) from Friend f where f.userid=?1 and f.friendid=?2")
-    public int selectCount(String userid,String friendid);
+
+    public  Friend findByUseridAndFriendid(String userid,String friendid);
     @Modifying
-    @Query("update Friend f set f.islike=?3 where f.userid=?1 and f.friendid=?2")
-    void updateLike(String userid,String friendid,String islike);
+    @Query(value = "update tb_friend set  islike=? where userid=? and friendid=?",nativeQuery = true)
+    void updateIslike(String islike, String userid, String friendid);
 }

@@ -1,30 +1,21 @@
-package com.tensquare.friend.entity;
-
-import org.springframework.data.annotation.Id;
+package com.tensquare.friend.pojo;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 import java.io.Serializable;
+
 @Entity
 @Table(name = "tb_friend")
 @IdClass(Friend.class)
 public class Friend implements Serializable {
     @Id
     private String userid;
-
     @Id
     private String friendid;
 
     private String islike;
-
-    public String getIslike() {
-        return islike;
-    }
-
-    public void setIslike(String islike) {
-        this.islike = islike;
-    }
 
     public String getUserid() {
         return userid;
@@ -40,5 +31,13 @@ public class Friend implements Serializable {
 
     public void setFriendid(String friendid) {
         this.friendid = friendid;
+    }
+
+    public String getIslike() {
+        return islike;
+    }
+
+    public void setIslike(String islike) {
+        this.islike = islike;
     }
 }
